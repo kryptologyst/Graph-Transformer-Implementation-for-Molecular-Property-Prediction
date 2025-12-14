@@ -1,0 +1,59 @@
+# Model configuration
+model:
+  name: "graph_transformer"
+  in_channels: 9  # ZINC node features
+  hidden_channels: 64
+  num_layers: 3
+  num_heads: 4
+  dropout: 0.1
+  use_positional_encoding: true
+  positional_encoding_dim: 16
+  use_edge_attr: true
+  edge_attr_dim: 3  # ZINC edge features
+
+# Training configuration
+training:
+  batch_size: 32
+  learning_rate: 0.001
+  weight_decay: 1e-4
+  num_epochs: 100
+  patience: 20
+  min_delta: 1e-4
+  gradient_clip_norm: 1.0
+  use_amp: false  # Automatic Mixed Precision
+
+# Data configuration
+data:
+  dataset: "ZINC"
+  data_root: "./data"
+  train_size: 10000
+  val_size: 1000
+  test_size: 1000
+  num_workers: 4
+  pin_memory: true
+  shuffle: true
+
+# Evaluation configuration
+evaluation:
+  metrics: ["mae", "rmse", "r2"]
+  save_predictions: true
+  save_embeddings: false
+
+# Logging configuration
+logging:
+  log_dir: "./logs"
+  use_wandb: false
+  wandb_project: "graph-transformer-zinc"
+  use_tensorboard: true
+  log_interval: 10
+  save_interval: 50
+
+# Paths
+paths:
+  checkpoints_dir: "./checkpoints"
+  assets_dir: "./assets"
+  results_dir: "./results"
+
+# Reproducibility
+seed: 42
+deterministic: true
